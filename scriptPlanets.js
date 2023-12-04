@@ -1,8 +1,9 @@
-// Parte 1: Consumo da API e Manipulação de Dados
-// O objetivo desta primeira parte é consumir a API "The Solar System OpenData"
-// para obter informações sobre os planetas do sistema solar e realizar operações
-// básicas de manipulação de dados usando métodos de array em JavaScript.
-
+/*
+Parte 1: Consumo da API e Manipulação de Dados
+O objetivo desta primeira parte é consumir a API "The Solar System OpenData"
+para obter informações sobre os planetas do sistema solar e realizar operações
+básicas de manipulação de dados usando métodos de array em JavaScript.
+*/
 // Tarefas
 
 let corposCelestes = [];
@@ -24,7 +25,8 @@ let ordenacaoComplexa = [] //14
 let planetasComLua = [] // 15
 let planetasComLuaTela = null // 15
 let mediaMassasPlanetas = 0 // 16
-let saturno //17
+
+let distanciaMinima = [] //17
 
 
 // ------------------------------------------------------
@@ -200,7 +202,7 @@ function encontrarLuas() {
     planetasComLua = filtradoPlanetaComLua
 
     document.write("Questão 15<br>")
-    filtradoPlanetaComLua.forEach(planeta => {document.write(`Planeta: ${planeta.englishName}<br>${planeta.moons.forEach(moon => {document.write(`Lua: ${moon.moon}<br>`)})}<br><br>`)
+filtradoPlanetaComLua.forEach(planeta => {document.write(`Planeta: ${planeta.englishName}<br>${planeta.moons.forEach(moon => {document.write(`Lua: ${moon.moon}<br>`)})}`)
     });
 }
 
@@ -216,14 +218,21 @@ function mediaMassas() {
 
 function distanciaSaturnoPlutao () {
 
-console.log(`17. Calcule a distância entre Saturno e Plutão:`);
-const saturno = corposCelestes.find((body) => body.englishName === "Saturn");
-const plutao = corposCelestes.find((body) => body.englishName === "Pluto");
+  // Encontrar Saturno e Plutão no array de corpos celestes
+  const saturno = corposCelestes.find((corpo) => corpo.englishName === "Saturn");
+  const plutao = corposCelestes.find((corpo) => corpo.englishName === "Pluto");
+
+  // Verificar se ambos os planetas foram encontrados no array
+  if (saturno && plutao) {
+    //pegar as distâncias do periélio e afélio para ambos os planetas
+    const periélioSaturno = saturno.semimajorAxis - saturno.aphelion;
+    const periélioPlutao = plutao.semimajorAxis - plutao.aphelion;
+
+    // Calcular a distância mínima entre Saturno e Plutão
+    distanciaMinima = Math.abs(periélioSaturno + periélioPlutao);
+  } 
 }
 
-
-//  const distanciaEntreEles = Math.abs(saturno.aphelion - plutao.perihelion);
-//  console.log(`A menor distância entre eles em relação ao sol é ${distanciaEntreEles}`);
 
 
 // 18. Planetas com Luas: liste todos os planetas que têm uma ou mais luas. Imprima na tela o planeta, e quantas luas ele tem.
@@ -238,6 +247,12 @@ function contarLuas() {
 
 
 // 19. O Desafio Final em Manipulação de Dados e Cálculos 
+// Análise Estatística do Sistema Solar: Utilize os métodos para realizar uma análise estatística completa dos planetas do sistema solar. 
+// - Crie um novo array que contém apenas planetas (excluindo luas, asteroides, etc.). 
+// - Crie um novo array que contém apenas as massas dos planetas. - Ordene o array de massas em ordem crescente. 
+// - Calcule a mediana das massas dos planetas. A mediana é o valor do meio em um conjunto de dados ordenado. Se o conjunto tem um número ímpar de observações, a mediana é o valor do meio. Se o conjunto tem um número par de observações, a mediana é a média dos dois valores do meio. 
+// - Encontrar Planeta Mais Próximo da Mediana: encontre o planeta cuja massa é mais próxima da mediana calculada.
+
 
 
 
@@ -259,7 +274,7 @@ getBodies().then(() => {
     sortAndFilterPlanets()
     encontrarLuas() //15
     mediaMassas() //16
-    // distanciaSaturnoPlutao() //17
+    distanciaSaturnoPlutao(); //17
 
     contarLuas() //18
 
@@ -296,9 +311,10 @@ getBodies().then(() => {
     console.log(planetasComLua);
     console.log("Questão 16");
     console.log(`Média das massas de todos os planetas: ${mediaMassasPlanetas}`);
-    // console.log("Questão 17");
-    // console.log(saturno.aphelion);
-    // console.log(`A menor distância entre eles em relação ao sol é ${distanciaEntreEles}`);
+    console.log("Questão 17");
+    console.log(`Distância mínima entre Saturno e Plutão: ${distanciaMinima} unidades.`);
+    ;
+    
 
     console.log("Questão 18 - Na tela, conforme solicitado no exercício");
     
